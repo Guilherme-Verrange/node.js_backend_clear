@@ -1,18 +1,10 @@
-const express = require ('express');
-let routesIndex = require("./routes/index.js");
-let routesUsers = require("./routes/users.js");
+const express = require('express');
+const consign = require('consign');
 
 let app = express();
 
+consign().include("routes").into(app);
 
-app.use(routesIndex);
-app.use('/users', routesUsers);
-
-
-
-    app.listen(3000, '127.0.0.1', ()=>{
-
-        console.log("Servidor Iniciado");
-
-
-    });
+app.listen(3000, "127.0.0.1", () => {
+  console.log("Servidor Iniciado");
+});
