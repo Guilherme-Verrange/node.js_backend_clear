@@ -51,4 +51,21 @@ module.exports = (app) => {
     });
 
   });
+
+  routeId.put((req, res) => {
+
+    db.update({_id:req.params.id}, req.body, err => {
+
+      if (err) {
+        app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
+      }else{
+        res.status(200).json(Object.assign(req.params, req.body)); // Retorna oa dados do usuário e mescla dois objets pra exibir id e info.
+      }
+
+    });
+
+  });
+
+
+
 };
