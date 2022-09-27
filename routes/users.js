@@ -6,15 +6,15 @@ let db = new neDB({
 });
 
 module.exports = (app) => {
-  app.get("/users", (req, res) => {
 
-    db.find({}).sort({name:1}).exec((err, users)=>{ // Filtra o usuário 
+  let  route = app.route('/users');
+
+  route.get((req, res) => {
+
+    db.find({}).sort({name:1}).exec((err, users)=>{ // Filtra o usuário pelo name de forma ordenada
 
       if(err){
-        console.log(`error: ${err}`);
-        res.status(400).json({ //Verificação caso ocorre um erro ele ser exibido na tela
-          error:err
-        })
+        app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
       }else{
 
         res.statusCode = 200;
@@ -26,13 +26,10 @@ module.exports = (app) => {
     });
   });
 
-  app.post("/users", (req, res) => {
+  route.post((req, res) => {
     db.insert(req.body, (err, user) => {
       if (err) {
-        console.log(`error: ${err}`);
-        res.status(400).json({
-          error: err,
-        });
+        app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
       } else {
         res.status(200).json(user);
       }
