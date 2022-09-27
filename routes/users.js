@@ -26,7 +26,7 @@ module.exports = (app) => {
     });
   });
 
-  route.post((req, res) => {
+  route.post((req, res) => { 
     db.insert(req.body, (err, user) => {
       if (err) {
         app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
@@ -40,7 +40,7 @@ module.exports = (app) => {
 
   routeId.get((req, res) => {
 
-    db.findOne({_id:req.params.id}).exec((err, user) => {
+    db.findOne({_id:req.params.id}).exec((err, user) => { // FindOne busca apenas uma informação especifica
 
       if (err) {
         app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
@@ -65,6 +65,25 @@ module.exports = (app) => {
     });
 
   });
+
+  routeId.delete((req, res) => {
+
+    db.remove({_id:req.params.id}, req.body, err => { 
+
+      if (err) {
+        app.utils.error.send(err, req, res,); //Chama o método utils/error caso ocorra um erro
+      }else{
+        res.status(200).json(req.params); // Retorna oa dados do usuário e mescla dois objets pra exibir id e info.
+      }
+
+    });
+
+  });
+
+
+  
+
+
 
 
 
